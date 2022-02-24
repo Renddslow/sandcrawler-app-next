@@ -25,12 +25,13 @@ const FormControl = styled.div`
   grid-gap: 4px;
 `;
 
-const InputStyled = styled.input`
+export const InputStyled = styled.input`
   appearance: none;
-  border: 1px solid #d0d4d7;
+  border: 2px solid #d0d4d7;
   border-radius: 4px;
-  padding: 18px;
+  padding: 16px;
   font-size: 18px;
+  min-width: 0;
 
   &:hover {
     border-color: #000;

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useCart } from '@components/cartProvider';
+import { useEffect } from 'react';
 
 const Header = styled.header`
   padding: 12px 48px;
@@ -71,7 +72,11 @@ const Spacer = styled.div`
 `;
 
 const Navigation = () => {
-  const { count, cartId } = useCart();
+  const { count, cartId, updateCount } = useCart();
+
+  useEffect(() => {
+    updateCount(cartId);
+  }, []);
 
   return (
     <Header>

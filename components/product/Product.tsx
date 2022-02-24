@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Head from 'next/head';
 
 import { Product } from './types';
@@ -10,6 +10,8 @@ import ProductPrice from './ProductPrice';
 import ProductDetails from './ProductDetails';
 import ProductContent from './ProductContent';
 import ProductSpecs from '@components/product/ProductSpecs';
+import { useCart } from '@components/cartProvider';
+import { useRouter } from 'next/router';
 
 type Props = {
   product: Product;
@@ -44,6 +46,31 @@ const Details = styled.div`
 `;
 
 const ProductLayout: FC<Props> = ({ product }) => {
+  const router = useRouter();
+  const { cartId, updateCount } = useCart();
+  const [addingToCart, setAddingToCart] = useState(false);
+
+  const handleAddToCart = () => {
+    setAddingToCart(true);
+    fetch(`http://localhost:8080/api/carts/${cartId}/items`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        data: {
+          type: 'cart_item',
+          attributes: {
+            itemId: parseInt(router.query.id as string, 10),
+          },
+        },
+      }),
+    }).then(() => {
+      setAddingToCart(false);
+      updateCount(cartId);
+    });
+  };
+
   return (
     <>
       <Head>
@@ -56,7 +83,9 @@ const ProductLayout: FC<Props> = ({ product }) => {
         <div>
           <ProductDetails name={product.name} manufacturer={product.manufacturer} />
           <ProductPrice price={product.pricing?.amount || product.originalPrice} />
-          <Button>Add to Cart</Button>
+          <Button disabled={addingToCart} onClick={handleAddToCart}>
+            {addingToCart ? 'Adding...' : 'Add to Cart'}
+          </Button>
           <ProductContent title="Product Overview" content={product.overview || ''} />
         </div>
       </Hero>
