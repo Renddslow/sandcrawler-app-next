@@ -19,11 +19,11 @@ const Cents = styled.span`
   font-weight: 600;
 `;
 
-const ProductPrice: FC<{ price: number }> = ({ price }) => {
-  const dollars = Math.floor(price / 100);
+const ProductPrice: FC<{ price: number; className?: string }> = ({ price, className }) => {
+  const dollars = new Intl.NumberFormat().format(Math.floor(price / 100));
   const cents = price % 100;
   return (
-    <Container>
+    <Container className={className}>
       <Dollar>${dollars}</Dollar>
       <Cents>{cents}</Cents>
     </Container>

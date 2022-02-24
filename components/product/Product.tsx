@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FC } from 'react';
+import Head from 'next/head';
 
 import { Product } from './types';
 import { Button } from '@components/shared';
@@ -45,20 +46,25 @@ const Details = styled.div`
 const ProductLayout: FC<Props> = ({ product }) => {
   return (
     <>
+      <Head>
+        <title>
+          {product.name} by {product.manufacturer} • Sandcrawler
+        </title>
+      </Head>
       <Hero>
         <ProductImage image={product.image} />
         <div>
           <ProductDetails name={product.name} manufacturer={product.manufacturer} />
           <ProductPrice price={product.pricing?.amount || product.originalPrice} />
           <Button>Add to Cart</Button>
-          <ProductContent title="Product Overview" content={product.overview} />
+          <ProductContent title="Product Overview" content={product.overview || ''} />
         </div>
       </Hero>
       <DetailsContainer>
         <Details>
           <div>
-            <ProductContent title="Product Description" content={product.description} />
-            <ProductContent title="Warranty" content={product.warranty} />
+            <ProductContent title="Product Description" content={product.description || ''} />
+            <ProductContent title="Warranty" content={product.warranty || ''} />
           </div>
           <ProductSpecs specs={product.specs} />
         </Details>
