@@ -32,7 +32,8 @@
     "alias": {
       "@components": [
         "components/*"
-      ]
+      ],
+      "@utils": ["utils/*"]
     }
   }
 }
