@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useCart } from '@components/cartProvider';
 
 const Header = styled.header`
   padding: 12px 48px;
@@ -36,6 +37,7 @@ const Icon = styled.a`
   text-decoration: none;
   cursor: pointer;
   border-radius: 50%;
+  position: relative;
 
   &:hover,
   &:focus {
@@ -47,11 +49,30 @@ const Icon = styled.a`
   }
 `;
 
+const IconBubble = styled.div`
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #30cdff;
+  border: 2px solid #fff;
+  color: #000;
+  font-weight: 800;
+  font-size: 12px;
+  position: absolute;
+  border-radius: 50%;
+  right: 4px;
+  bottom: 4px;
+`;
+
 const Spacer = styled.div`
   width: 48px;
 `;
 
 const Navigation = () => {
+  const { count, cartId } = useCart();
+
   return (
     <Header>
       <Spacer />
@@ -67,6 +88,7 @@ const Navigation = () => {
       <Link href="/cart" passHref>
         <Icon>
           <span className="material-icons-outlined">shopping_cart</span>
+          {!!count && <IconBubble>{count}</IconBubble>}
         </Icon>
       </Link>
     </Header>

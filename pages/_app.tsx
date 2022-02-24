@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import Head from 'next/head';
 
 import Navigation from '@components/navigation';
+import CartProvider from '@components/cartProvider';
 
 const Global = createGlobalStyle`
   * {
@@ -29,8 +30,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <Global />
-      <Navigation />
-      <Component {...pageProps} />
+      <CartProvider>
+        <Navigation />
+        <Component {...pageProps} />
+      </CartProvider>
     </>
   );
 }

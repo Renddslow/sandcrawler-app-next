@@ -30,6 +30,11 @@ export const getServerSideProps = async (context: GetServerSidePropsContext<{ id
   };
 };
 
+/**
+ * TODO: cart context
+ * TODO: checkout
+ */
+
 const Home = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <ProductGrid>
