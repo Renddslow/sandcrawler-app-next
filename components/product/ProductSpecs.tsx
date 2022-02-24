@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { FC } from 'react';
 import { ItemSpec } from '@components/product/types';
 import SectionTitle from '@components/product/SectionTitle';
+import sortOn from 'sort-on';
 
 type Props = {
   specs: ItemSpec[];
@@ -47,7 +48,7 @@ const ProductSpecs: FC<Props> = (props) => {
     <Container>
       <SectionTitle>Specifications</SectionTitle>
       <div>
-        {props.specs.map((spec) => (
+        {sortOn(props.specs, 'label').map((spec) => (
           <Row key={spec.label}>
             <LabelCell>{spec.label}</LabelCell>
             <Cell>{spec.value}</Cell>
